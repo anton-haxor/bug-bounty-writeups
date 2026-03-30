@@ -1,0 +1,159 @@
+1. RECON (Understand the Target FIRST)
+🎯 Goal: Know the system before attacking it
+✅ Checklist:
+ Create account(s) (user + second user if possible)
+ Map all pages:
+Login / Register
+Profile
+Password reset
+Upload forms
+Admin panels (if visible)
+ Identify:
+URL parameters (?id=123)
+Forms (input fields)
+API calls (check DevTools → Network)
+🔥 Ask Yourself:
+What can a normal user do?
+Where is data being sent?
+🧪 2. INPUT DISCOVERY (Where can I attack?)
+🎯 Goal: Find ALL entry points
+✅ Checklist:
+ Text inputs
+ Search bars
+ File uploads
+ URL parameters
+ Headers (User-Agent, etc.)
+ Cookies
+ API JSON requests
+🔥 Rule:
+
+👉 If you can send data → you can break something
+
+💥 3. XSS TESTING (High Success Rate)
+🎯 Goal: Inject JavaScript
+✅ Checklist:
+
+Test EVERY input with:
+
+<script>alert(1)</script>
+
+Then try:
+
+"><script>alert(1)</script>
+Check:
+ Reflected (response shows input)
+ Stored (saved in profile/comments)
+ DOM-based (JS handles input)
+🔥 Pro Tip:
+Look at:
+Search pages
+Profile fields
+Comments/messages
+🔓 4. IDOR TESTING (VERY IMPORTANT)
+🎯 Goal: Access other users’ data
+✅ Checklist:
+ Find request like:
+/api/user?id=123
+ Change:
+123 → 124 → 125
+Test:
+ Can you see another user’s data?
+ Can you edit/delete it?
+🔥 GOLDMINE Areas:
+Profile pages
+Orders/invoices
+Messages
+File downloads
+🔑 5. AUTHENTICATION TESTING
+🎯 Goal: Break login/security
+✅ Checklist:
+ Try weak passwords
+ Test login responses:
+Different errors?
+ Password reset:
+Can you reuse tokens?
+Can you change email?
+Test:
+ Remove tokens in requests
+ Replay old requests (Burp Repeater)
+⚙️ 6. ACCESS CONTROL (BIG $$$ BUGS)
+🎯 Goal: Do things you shouldn’t
+✅ Checklist:
+ Log in as User A
+ Try:
+Access admin pages
+Modify privileged actions
+Test:
+ Change roles in requests:
+"user":"admin"
+📂 7. FILE UPLOAD TESTING
+🎯 Goal: Upload dangerous files
+✅ Checklist:
+ Upload:
+.php
+.js
+.html
+.txt
+ Try bypass:
+file.php.jpg
+file.phtml
+Check:
+ Can the file execute?
+ Can others access it?
+🌐 8. API TESTING (VERY POWERFUL)
+🎯 Goal: Break backend logic
+✅ Checklist:
+ Open DevTools → Network
+ Look for:
+/api/
+JSON requests
+Test:
+ Modify values:
+"user_id":123 → 124
+ Remove fields
+ Add unexpected fields
+🔁 9. REPLAY & MODIFY (BURP SUITE)
+🎯 Goal: Manipulate requests
+✅ Checklist:
+ Send request to Repeater
+ Modify:
+Parameters
+Headers
+Tokens
+🔥 This is where MOST bugs are found
+📝 10. DOCUMENT EVERYTHING
+🎯 Goal: Build your portfolio
+✅ For EVERY test:
+
+Write:
+
+Feature:
+What I tested:
+Payload used:
+Result:
+Impact:
+🔥 Even FAILED attempts matter
+🚨 SIMPLE WORKFLOW (Memorize This)
+
+Every session:
+
+Recon
+Find inputs
+Pick ONE bug type
+Test deeply
+Modify requests
+Document
+💡 PRO TIPS (From Real Pentesters)
+🎯 Depth > Breadth
+🔁 Revisit same feature multiple times
+🧠 Think: “What did the developer forget?”
+🐢 Slow and logical beats fast and random
+🎯 Your First Target Strategy
+
+Start with:
+
+Profile page
+Password reset
+Search bar
+
+👉 These have the highest beginner success rate
