@@ -1,0 +1,178 @@
+🧪 1. REAL BUG WALKTHROUGH (IDOR — Most Common Beginner Win)
+🎯 Scenario: Profile API
+
+You log into a site and open DevTools → Network
+
+You see this request:
+
+GET /api/user?id=123
+🧠 Step 1: Think Like an Attacker
+
+Ask:
+
+“Is this ID tied to MY account only?”
+“What if I change it?”
+🔁 Step 2: Modify the Request (Burp Repeater)
+
+Change:
+
+GET /api/user?id=124
+💥 Step 3: Result
+
+👉 You get:
+
+Another user’s name
+Email
+Possibly sensitive data
+🚨 That’s a VALID BUG
+Why?
+No access control
+Direct object reference exposed
+📝 How You Report It
+
+Title: IDOR in user profile API
+
+Steps:
+
+Log in
+Capture request /api/user?id=123
+Change ID to another user
+Observe data leak
+
+Impact:
+
+Unauthorized data access
+Privacy breach
+🔥 THIS is how most first bugs are found
+🧠 2. MENTAL MODELS (THIS IS THE REAL SECRET)
+
+Forget tools for a second. This is how pros think:
+
+🧩 Model 1: “Trust Boundaries”
+
+Ask:
+
+“What is the server trusting that it shouldn’t?”
+
+Examples:
+
+User ID from request
+Role from frontend
+Hidden fields
+
+👉 Break that trust
+
+🔄 Model 2: “What if I change this?”
+
+Every parameter:
+
+ID → change it
+Role → escalate it
+Price → reduce it
+
+👉 Simple but powerful
+
+🚪 Model 3: “Can I go where I shouldn’t?”
+
+Try:
+
+/admin
+/api/admin
+Other users’ data
+🔍 Model 4: “Where does my input go?”
+
+Trace:
+
+Input → server → response
+
+Ask:
+
+Is it reflected? (XSS)
+Is it stored? (Stored XSS)
+🧠 Model 5: “Developer Assumptions”
+
+Developers assume:
+
+Users behave normally
+IDs won’t be changed
+Requests won’t be replayed
+
+👉 Your job = break assumptions
+
+🎯 3. BEST BEGINNER TARGETS (HIGH SUCCESS RATE)
+🥇 1. Large Programs (More Bugs)
+
+Start on:
+
+HackerOne
+Bugcrowd
+
+Look for:
+
+“Public program”
+“Wide scope”
+🥈 2. What to Look For in a Target
+
+Choose apps with:
+
+Login system 🔑
+User profiles 👤
+File uploads 📂
+Search functionality 🔍
+
+👉 These = more attack surface
+
+🥉 3. Avoid (For Now)
+❌ Crypto platforms
+❌ Banking apps
+❌ Highly restricted scope
+
+👉 Too hardened for beginners
+
+🎯 EXACT START STRATEGY (DO THIS TODAY)
+Step 1:
+
+Pick ONE program only
+
+Step 2:
+
+Create:
+
+Account A
+Account B
+Step 3:
+
+Focus ONLY on:
+
+Profile page
+Password reset
+API calls
+Step 4:
+
+Test:
+
+Change IDs (IDOR)
+Inject XSS
+Modify requests
+🔥 YOUR FIRST BUG LIKELY COMES FROM:
+IDOR (changing IDs)
+Stored XSS (profile/comments)
+Access control issues
+⚡ REALISTIC EXPECTATION
+Week 1–2: Confusion 😅
+Week 3: Patterns start clicking
+Week 4+: First bug (if consistent)
+🚀 YOUR ADVANTAGE (IMPORTANT)
+
+You are doing:
+
+✅ PenTest+
+✅ PNPT
+
+👉 That means you already understand:
+
+Networking
+Attacks
+Methodology
+
+Bug bounty = real-world application of what you already know
